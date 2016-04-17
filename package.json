@@ -1,0 +1,9 @@
+{
+  "name": "lib_router",
+  "main": "index.js",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "restify": "^4.0.4"
+  }
+}
