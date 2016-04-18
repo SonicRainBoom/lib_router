@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "lib_srbevent": "github:sonicrainboom/lib_srbevent",
     "restify": "^4.0.4"
   }
 }
