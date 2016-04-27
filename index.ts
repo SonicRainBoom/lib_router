@@ -4,10 +4,18 @@ import {RequestHandler} from "restify";
 import {SRBEvent} from "lib_srbevent";
 
 export class Router {
-  constructor(private server: restify.Server, private port: number) {
+  constructor(
+    private server: restify.Server,
+    private port: number,
+    private hostname?: string
+  ) {
   }
 
-  addRoute(method: string, route: string, endpoint: RequestHandler) {
+  addRoute(
+    method: string,
+    route: string,
+    endpoint: RequestHandler
+  ) {
     method = method.toUpperCase();
     switch (method) {
       case 'DELETE':
@@ -20,15 +28,45 @@ export class Router {
       case 'PUT':
         this.server.put(route, endpoint);
         break;
+      case 'POST':
+        this.server.post(route, endpoint);
+        break;
       case 'GET:':
       default:
         this.server.get(route, endpoint);
         break;
     }
-  }
+  };
 
   start() {
-    this.server.listen(this.port);
+    this.server.on(
+      'error', (e: {code: string}) => {
+        switch (e.code) {
+          case 'EADDRINUSE':
+            if (this.port == 8081) {
+              console.error('no port in range available');
+              process.exit(1);
+            }
+            this.port = this.port == 8080 ? 8081 : 8080;
+            console.log(`Port in use, retrying on port ${this.port}...`);
+            this.server.close();
+            if (this.hostname) {
+              this.server.listen(this.port, this.hostname);
+            }        else {
+              this.server.listen(this.port);
+            }
+            SRBEvent.event.emit('router_listening', this.port);
+            break;
+          default:
+            console.error(`Error while stating server: ${e.code}`);
+        }
+      }
+    );
+    if (this.hostname) {
+      this.server.listen(this.port, this.hostname);
+    }        else {
+      this.server.listen(this.port);
+    }
     SRBEvent.event.emit('router_listening', this.port);
-  }
+  };
 }
