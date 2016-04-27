@@ -31,7 +31,7 @@ export class Router {
       case 'POST':
         this.server.post(route, endpoint);
         break;
-      case 'GET:':
+      case 'GET':
       default:
         this.server.get(route, endpoint);
         break;
