@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 import * as restify from "restify";
 import {RequestHandler, Server, ServerOptions} from "restify";
 export {Request, Response, Next} from 'restify';
@@ -34,15 +34,19 @@ export class Router {
       case 'DEL':
         this.server.del(route, endpoint);
         break;
+
       case 'HEAD':
         this.server.head(route, endpoint);
         break;
+
       case 'PUT':
         this.server.put(route, endpoint);
         break;
+
       case 'POST':
         this.server.post(route, endpoint);
         break;
+
       case 'GET':
       default:
         this.server.get(route, endpoint);
