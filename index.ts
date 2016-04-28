@@ -1,14 +1,26 @@
 'use strict';
 import * as restify from "restify";
-import {RequestHandler} from "restify";
+import {RequestHandler, Server, ServerOptions} from "restify";
+export {Request, Response, Next} from 'restify';
 import {SRBEvent} from "lib_srbevent";
 
+export interface RouterOptions extends ServerOptions {
+  server?: Server
+  port: number,
+  hostname?: string
+}
+
 export class Router {
+  private server: Server;
+  private port: number;
+  private hostname: string;
+
   constructor(
-    private server: restify.Server,
-    private port: number,
-    private hostname?: string
+    private opts: RouterOptions
   ) {
+    this.server = opts.server || restify.createServer(opts);
+    this.port = opts.port || 8080;
+    this.hostname = opts.hostname || null;
   }
 
   addRoute(
@@ -52,7 +64,7 @@ export class Router {
             this.server.close();
             if (this.hostname) {
               this.server.listen(this.port, this.hostname);
-            }        else {
+            } else {
               this.server.listen(this.port);
             }
             SRBEvent.event.emit('router_listening', this.port);
@@ -64,7 +76,7 @@ export class Router {
     );
     if (this.hostname) {
       this.server.listen(this.port, this.hostname);
-    }        else {
+    } else {
       this.server.listen(this.port);
     }
     SRBEvent.event.emit('router_listening', this.port);

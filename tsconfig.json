@@ -4,7 +4,11 @@
     "module": "commonjs",
     "target": "es5",
     "noImplicitAny": true,
-    "sourceMap": true
+    "noImplicitReturns": true,
+    "noImplicitUseStrict": true,
+    "sourceMap": true,
+    "newLine": "lf" ,
+    "removeComments": true
   },
   "exclude": [
     "node_modules"
