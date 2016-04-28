@@ -18,8 +18,8 @@ export class Router {
   constructor(
     private opts: RouterOptions
   ) {
-    this.server = opts.server || restify.createServer(opts);
-    this.port = opts.port || 8080;
+    this.server   = opts.server || restify.createServer(opts);
+    this.port     = opts.port || 8080;
     this.hostname = opts.hostname || null;
   }
 
