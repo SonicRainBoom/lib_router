@@ -8,7 +8,8 @@
     "restify": "^4.0.4"
   },
   "scripts": {
-    "postinstall": "typings i && tsc -p ."
+    "postinstall": "typings i && tsc -p .",
+    "test": "node ./test.js"
   },
   "devDependencies": {
     "typescript": "^1.8.10",
