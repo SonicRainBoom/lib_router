@@ -1,7 +1,7 @@
 {
-  "ambientDependencies": {
-    "bunyan": "registry:dt/bunyan#0.0.0+20160412155112",
-    "node": "registry:dt/node#4.0.0+20160412142033",
-    "restify": "registry:dt/restify#2.0.0+20160316155526"
+  "globalDependencies": {
+    "bunyan": "registry:dt/bunyan#0.0.0+20160316155526",
+    "node": "registry:dt/node#6.0.0+20160514165920",
+    "restify": "registry:dt/restify#2.0.0+20160425141054"
   }
 }

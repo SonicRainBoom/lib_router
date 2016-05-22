@@ -1,7 +1,7 @@
 "use strict";
 import * as restify from "restify";
 import {RequestHandler, Server, ServerOptions} from "restify";
-export {Request, Response, Next} from 'restify';
+export {Request, Response, Next, ServerOptions} from 'restify';
 import {SRBEvent} from "lib_srbevent";
 
 export interface RouterOptions extends ServerOptions {

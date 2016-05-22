@@ -1,5 +1,5 @@
 'use strict';
-var router   = require('./index');
+var router   = require('./lib/router');
 var srbEvent = require('lib_srbevent');
 
 setTimeout(

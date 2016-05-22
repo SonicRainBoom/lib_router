@@ -1,18 +1,25 @@
 {
-  "name": "lib_router",
-  "main": "index.js",
-  "version": "0.0.0",
-  "private": true,
-  "dependencies": {
+  "name"           : "lib_router",
+  "version"        : "0.0.0",
+  "private"        : true,
+  "dependencies"   : {
     "lib_srbevent": "github:sonicrainboom/lib_srbevent",
-    "restify": "^4.0.4"
+    "restify"     : "^4.0.4"
   },
-  "scripts": {
+  "scripts"        : {
     "postinstall": "typings i && tsc -p .",
-    "test": "node ./test.js"
+    "test"       : "node ./test.js"
   },
   "devDependencies": {
     "typescript": "^1.8.10",
-    "typings": "^0.8.1"
-  }
+    "typings"   : "^1.0.4"
+  },
+  "main"           : "lib/router.js",
+  "typings"        : "lib/router",
+  "files"          : [
+    "router.ts",
+    "test.js",
+    "tsconfig.json",
+    "typings.json"
+  ]
 }

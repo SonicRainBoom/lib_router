@@ -6,6 +6,6 @@ node_js:
   - "4.2"
   - "4.1"
   - "4.0"
-before_install: npm install -g typings typescript
+before_install: npm install -g typings typescript # required for node 4.x
 install: npm install ./
 script: npm test
