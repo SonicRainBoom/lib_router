@@ -19,6 +19,7 @@
   ],
   "files"          : [
     "typings/index.d.ts",
-    "router.ts"
+    "router.ts",
+    "test.ts"
   ]
 }

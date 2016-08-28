@@ -6,4 +6,4 @@
 !/.npmignore
 !/.gitignore
 !/.travis.yml
-!/test.js
+!/test.ts

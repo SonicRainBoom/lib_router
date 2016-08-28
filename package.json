@@ -3,12 +3,11 @@
   "version"        : "0.0.0",
   "private"        : true,
   "dependencies"   : {
-    "lib_srbevent": "github:sonicrainboom/lib_srbevent",
     "restify"     : "^4.0.4"
   },
   "scripts"        : {
     "postinstall": "typings i && tsc -p .",
-    "test"       : "node ./test.js"
+    "test"       : "node ./lib/test.js"
   },
   "devDependencies": {
     "typescript": "^1.8.10",
@@ -18,7 +17,7 @@
   "typings"        : "lib/router",
   "files"          : [
     "router.ts",
-    "test.js",
+    "test.ts",
     "tsconfig.json",
     "typings.json"
   ]
