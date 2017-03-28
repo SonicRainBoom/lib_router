@@ -1,24 +1,26 @@
 {
-  "name"           : "lib_router",
-  "version"        : "0.0.0",
-  "private"        : true,
-  "dependencies"   : {
-    "restify"     : "^4.0.4"
+  "name": "lib_router",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@types/bunyan": "0.0.36",
+    "@types/node": "^7.0.12",
+    "@types/restify": "^2.0.42",
+    "restify": "^4.0.4"
   },
-  "scripts"        : {
-    "postinstall": "typings i && tsc -p .",
-    "test"       : "node ./lib/test.js"
+  "scripts": {
+    "postinstall": "tsc -p .",
+    "test": "node ./lib/test.js"
   },
   "devDependencies": {
-    "typescript": "^1.8.10",
-    "typings"   : "^1.0.4"
+    "typescript": "^2.1",
+    "typings": "^1.0.4"
   },
-  "main"           : "lib/router.js",
-  "typings"        : "lib/router",
-  "files"          : [
+  "main": "./lib/router.js",
+  "typings": "./tsd/router.d.ts",
+  "files": [
     "router.ts",
     "test.ts",
-    "tsconfig.json",
-    "typings.json"
+    "tsconfig.json"
   ]
 }

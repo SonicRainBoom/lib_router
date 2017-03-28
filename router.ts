@@ -21,7 +21,7 @@ export class Router {
   private hostname: string;
 
   constructor(
-    private opts: RouterOptions
+    opts: RouterOptions
   ) {
     this.server   = opts.server || restify.createServer(opts);
     this.port     = opts.port || 8080;
@@ -65,7 +65,7 @@ export class Router {
     restify.CORS.ALLOW_HEADERS = [
       ...restify.CORS.ALLOW_HEADERS || [],
       ...headers,
-      ...additionalHeaders
+      ...additionalHeaders || []
     ];
 
     // Manually implement the method not allowed handler to fix failing
@@ -73,7 +73,10 @@ export class Router {
     this.server.on(
       "MethodNotAllowed",
       (request: Request, response: Response) => {
-        if (request.method.toUpperCase() === "OPTIONS") {
+        if (request.method.toUpperCase() !== "OPTIONS") {
+          response.send(new restify.MethodNotAllowedError());
+          return;
+        } else {
           // Send the CORS headers
           //
           response.header("Access-Control-Allow-Credentials", true);
@@ -83,7 +86,7 @@ export class Router {
           );
           response.header(
             "Access-Control-Allow-Methods",
-            "GET, POST, PUT, DELETE, OPTIONS"
+            "GET, HEAD, POST, PUT, DELETE, OPTIONS"
           );
           response.header(
             "Access-Control-Allow-Origin",
@@ -94,8 +97,6 @@ export class Router {
           response.header("Content-length", 0);
 
           response.send(204);
-        } else {
-          response.send(new restify.MethodNotAllowedError());
         }
       }
     );
@@ -125,10 +126,15 @@ export class Router {
         this.server.post(route, endpoint);
         break;
 
+      case 'OPTIONS':
+        this.server.opts(route, endpoint);
+        break;
+
       case 'GET':
-      default:
         this.server.get(route, endpoint);
         break;
+      default:
+        throw new Error(`HTTP-Method ${method} is not implemented!`);
     }
   };
 
@@ -138,7 +144,7 @@ export class Router {
       let tryCount    = 0;
       let maxTry      = 10;
       let currentPort = this.port;
-      this.server.on('listening', ()=> {
+      this.server.on('listening', () => {
         resolve(currentPort);
         return;
       });
@@ -149,17 +155,17 @@ export class Router {
               tryCount++;
               nextPort = this.port + tryCount;
               this.server.close();
-              if (tryCount < maxTry) {
-                console.log(`Port in use, retrying on port ${nextPort}...`);
-                currentPort = nextPort;
-                if (this.hostname) {
-                  this.server.listen(currentPort, this.hostname);
-                } else {
-                  this.server.listen(currentPort);
-                }
+              if (tryCount >= maxTry) {
+                reject(e);
                 return;
               }
-              reject(e);
+              console.log(`Port in use, retrying on port ${nextPort}...`);
+              currentPort = nextPort;
+              if (this.hostname) {
+                this.server.listen(currentPort, this.hostname);
+              } else {
+                this.server.listen(currentPort);
+              }
               return;
             default:
               reject(e);
